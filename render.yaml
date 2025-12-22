@@ -15,7 +15,7 @@ services:
   - type: static
     name: bliztar-admin
     rootDir: admin
-    buildCommand: npm ci && npm run build
+    buildCommand: cd admin && npm ci && npm run build
     staticPublishPath: dist
     routes:
       - type: rewrite
