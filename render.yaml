@@ -1,11 +1,9 @@
 services:
   - type: web
     name: bliztar-backend
-    runtime: node
     rootDir: backend
-    buildCommand: npm install
-    # Use a direct node start here to avoid relying on dev tools like nodemon
-    startCommand: node src/index.js
+    buildCommand: npm ci
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -17,18 +15,9 @@ services:
   - type: static
     name: bliztar-admin
     rootDir: admin
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci && npm run build
     staticPublishPath: dist
     routes:
       - type: rewrite
         source: /*
         destination: /index.html
-
-  # Fallback service: if Render creates a root service (and ignores render.yaml),
-  # this ensures the process will run the backend instead of `node index.js`.
-  - type: web
-    name: bliztar-root-fallback
-    runtime: node
-    rootDir: .
-    buildCommand: npm install
-    startCommand: node backend/src/index.js
