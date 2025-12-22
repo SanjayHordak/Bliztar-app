@@ -14,6 +14,6 @@ services:
 
   - type: static
     name: bliztar-admin
-    rootDir: admin
+    rootDir: Bliztar-app
     buildCommand: npm ci && npm run build
-    staticPublishPath: dist
+    staticPublishPath: admin/dist
