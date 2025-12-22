@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "admin/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "admin/dist"
+      }
+    },
+    {
+      "src": "backend/src/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/src/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "admin/dist/$1"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/backend/src/server.js"
+    }
+  ],
+  "outputDirectory": "admin/dist"
+}
