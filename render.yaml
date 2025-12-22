@@ -5,7 +5,7 @@ services:
     rootDir: backend
     buildCommand: npm install
     # Use a direct node start here to avoid relying on dev tools like nodemon
-    startCommand: node src/server.js
+    startCommand: node src/index.js
     envVars:
       - key: NODE_ENV
         value: production
@@ -31,4 +31,4 @@ services:
     runtime: node
     rootDir: .
     buildCommand: npm install
-    startCommand: node backend/src/server.js
+    startCommand: node backend/src/index.js
