@@ -22,8 +22,10 @@ if(ENV.NODE_ENV==='production'){
         res.sendFile(path.join(__dirname,"../../admin","dist","index.html"));
     })
 };
-app.listen(port,()=>{
-    console.log(`Server is running on port ${port}`);
-    connectDB();
-}
-    );
+const startServer = async() =>{
+    await connectDB();
+    app.listen(port,() =>{
+        console.log(`Server is running on port ${port}`);
+    });
+};
+startServer();
