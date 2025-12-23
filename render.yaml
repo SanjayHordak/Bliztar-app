@@ -1,4 +1,14 @@
 services:
+  - type: static
+    name: bliztar-admin
+    rootDir: admin
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
   - type: web
     name: bliztar-backend
     rootDir: backend
@@ -11,13 +21,3 @@ services:
         value: 10000
       - key: DB_URL
         sync: false
-
-  - type: static
-    name: bliztar-admin
-    rootDir: admin
-    buildCommand: npm ci && npm run build
-    staticPublishPath: dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
