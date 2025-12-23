@@ -93,7 +93,7 @@ const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const backendDir = path.join(__dirname, 'backend');
+// const backendDir = path.join(__dirname, 'backend'); // Removed duplicate declaration
 const expressMarker = path.join(backendDir, 'node_modules', 'express');
 
 if (!fs.existsSync(expressMarker)) {
