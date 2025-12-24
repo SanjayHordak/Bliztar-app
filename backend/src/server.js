@@ -14,16 +14,18 @@ const port = ENV.PORT || 5000;
 // CORS configuration - allow requests from Vercel frontend
 const allowedOrigins = [
     ENV.FRONTEND_URL,
-    'https://bliztar-app-frontend.vercel.app',
     'http://localhost:5173',
     'http://localhost:3000'
 ].filter(Boolean).map(url => url?.replace(/\/$/, ''));
+
+console.log('✅ CORS Allowed Origins:', allowedOrigins);
 
 const corsOptions = {
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin?.replace(/\/$/, ''))) {
             callback(null, true);
         } else {
+            console.log('⚠️ CORS blocked origin:', origin);
             callback(null, true); // Allow all for now, can restrict later
         }
     },
