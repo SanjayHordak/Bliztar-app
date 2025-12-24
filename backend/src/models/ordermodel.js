@@ -1,0 +1,32 @@
+import mongoose from "mongoose";
+
+const orderItemSchema = new mongoose.Schema({
+    product:{type:mongoose.Schema.Types.ObjectId,ref:'Product',required:true},
+    name:{type:String,required:true},
+    quantity:{type:Number,required:true,min:1,default:1},
+    price:{type:Number,required:true,min:0},
+    image:{type:String,required:true}
+},{timestamps:true});
+
+const shippingAddressSchema = new mongoose.Schema({
+    fullname:{type:String,required:true},
+    streetAddress:{type:String,required:true},
+    city:{type:String,required:true},
+    zipCode:{type:String,required:true},
+    phoneNumber:{type:String,required:true}, 
+},{timestamps:true});
+
+const orderSchema = new mongoose.Schema({
+    user:{type:mongoose.Schema.Types.ObjectId,ref:'User',required:true},
+    clerkId:{type:String,required:true},
+    items:[orderItemSchema],
+    shippingAddress:{type:shippingAddressSchema,required:true},
+    paymentResult:{id:String,status:String},
+    totalPrice:{type:Number,required:true,min:0},
+    status:{type:String,enum:['Pending','Shipped','Delivered'],default:'Pending'},
+    deliveredAt:{type:Date},
+    shippedAt:{type:Date},
+
+},{timestamps:true})
+
+export const Order = mongoose.model('Order',orderSchema);
