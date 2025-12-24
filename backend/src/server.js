@@ -12,8 +12,21 @@ const __dirname = path.resolve();
 const port = ENV.PORT || 5000;
 
 // CORS configuration - allow requests from Vercel frontend
+const allowedOrigins = [
+    ENV.FRONTEND_URL,
+    'https://bliztar-app-frontend.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
+].filter(Boolean).map(url => url?.replace(/\/$/, ''));
+
 const corsOptions = {
-    origin: ENV.FRONTEND_URL || '*', // Set your Vercel URL in env
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin?.replace(/\/$/, ''))) {
+            callback(null, true);
+        } else {
+            callback(null, true); // Allow all for now, can restrict later
+        }
+    },
     credentials: true,
     optionsSuccessStatus: 200
 };
@@ -22,6 +35,17 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(clerkMiddleware()); // Adds Clerk authentication middleware => req.auth
 app.use("/api/inngest",serve({client:inngest, functions}));
+
+app.get("/",(req,res)=>{
+    res.status(200).json({
+        message:'Bliztar Backend API', 
+        status: 'Running',
+        endpoints: {
+            health: '/api/health',
+            inngest: '/api/inngest'
+        }
+    });
+});
 
 app.get("/api/health",(req,res)=>{
     res.status(200).json({message:'Success'});
