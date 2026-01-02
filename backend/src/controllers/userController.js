@@ -8,6 +8,10 @@ export async function addAddress(req,res){
         
         const user = req.user;
 
+        if(!label || !fullname || !streetAddress || !city || !state || !zipCode || !phoneNumber){
+            return res.status(400).json({message:"All address fields are required"});
+        }
+
         //If isDefault is true, set all other addresses to false
 
         if(isDefault){
@@ -111,7 +115,8 @@ export async function addToWishlist(req,res){
 }
 export async function getWishlist(req,res){
     try {
-        const user = req.user;
+        //We are using populate,because wishlist is just an array of product IDs
+        const user = await User.findById(req.user._id).populate("wishlist");
         res.status(200).json({wishlist:user.wishlist});
     } catch (error) {
         res.status(500).json({message:"Failed to fetch wishlist",error:error.message});  
