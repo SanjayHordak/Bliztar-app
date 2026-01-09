@@ -6,9 +6,11 @@ import { connectDB } from './config/db.js';
 import { clerkMiddleware } from '@clerk/express'
 import { serve } from "inngest/express";
 import { functions, inngest } from './config/inngest.js';
-import adminRoutes from './routes/adminroutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import userRoutes from './routes/userRoutes.js'
 import orderRoute from './routes/orderRoutes.js'
+import reviewRoutes from './routes/reviewRoutes.js'
+import productRoutes from './routes/productRoutes.js'
 
 const app = express();
 const __dirname = path.resolve();
@@ -40,9 +42,14 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(clerkMiddleware()); // Adds Clerk authentication middleware => req.auth
 app.use("/api/inngest",serve({client:inngest, functions}));
+
+
+
 app.use('/api/admin',adminRoutes);
 app.use('/api/users',userRoutes);
 app.use('/api/orders',orderRoute);
+app.use('/api/reviews',reviewRoutes);
+app.use('/api/products',productRoutes);
 
 app.get("/",(req,res)=>{
     res.status(200).json({
