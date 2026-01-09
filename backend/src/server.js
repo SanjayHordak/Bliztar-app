@@ -11,6 +11,7 @@ import userRoutes from './routes/userRoutes.js'
 import orderRoute from './routes/orderRoutes.js'
 import reviewRoutes from './routes/reviewRoutes.js'
 import productRoutes from './routes/productRoutes.js'
+import cartRoutes from './routes/cartRoutes.js'
 
 const app = express();
 const __dirname = path.resolve();
@@ -50,6 +51,7 @@ app.use('/api/users',userRoutes);
 app.use('/api/orders',orderRoute);
 app.use('/api/reviews',reviewRoutes);
 app.use('/api/products',productRoutes);
+app.use('/api/cart',cartRoutes)
 
 app.get("/",(req,res)=>{
     res.status(200).json({
