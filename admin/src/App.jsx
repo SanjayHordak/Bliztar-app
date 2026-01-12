@@ -1,38 +1,37 @@
-import React, { useEffect, useState } from 'react'
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
-import { apiClient } from './utils/api';
+import { SignedIn, SignedOut, SignInButton, useAuth, UserButton } from '@clerk/clerk-react';
+import axiosInstance from './lib/axios';
+import { Navigate, Route, Routes } from 'react-router';
+import LoginPage from './pages/LoginPage';
+import DashBoard from './pages/Dashboard';
+import ProductsPage from './pages/ProductsPage';
+import OrdersPage from './pages/OrdersPage';
+import CustomersPage from './pages/CustomersPage';
+import DashboardLayouts from './Layouts/DashboardLayouts';
+import PageLoader from './Components/PageLoader';
+
 
 function App() {
-  const [apiStatus, setApiStatus] = useState('Checking backend...');
+   
+  const getProducts = async () => {
+   const res = await axiosInstance.get('/products');
+   return res.data;
+  }
+  const {isSignedIn, isLoaded} = useAuth();
 
-  // Example: Test backend connection
-  useEffect(() => {
-    const checkBackend = async () => {
-      try {
-        const data = await apiClient.get('/api/health');
-        setApiStatus(`✅ Backend connected: ${data.message}`);
-      } catch (error) {
-        setApiStatus(`❌ Backend error: ${error.message}`);
-      }
-    };
-    
-    checkBackend();
-  }, []);
+  if(!isLoaded) return <PageLoader/>
 
   return (
-    <div>
-      <h1>Home Page</h1>
-      <p style={{ fontSize: '14px', color: apiStatus.includes('✅') ? 'green' : 'red' }}>
-        {apiStatus}
-      </p>
-      <SignedOut>
-        <SignInButton mode="modal"/>
-      </SignedOut>
+    <Routes>
+      <Route path='/login' element={isSignedIn ? <Navigate to={"/dashboard"}/> :<LoginPage/>}/>
 
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
-    </div>
+      <Route path='/' element={isSignedIn ? <DashboardLayouts/> : <Navigate to={"/login"}/>}>
+            <Route index element={<Navigate to={"dashboard"}/>}/>
+            <Route path='dashboard' element={<DashBoard/>}/>
+            <Route path='products' element={<ProductsPage/>}/>
+            <Route path='orders' element={<OrdersPage/>}/>
+            <Route path='customers' element={<CustomersPage/>}/>
+      </Route>
+    </Routes>
   )
 }
 
