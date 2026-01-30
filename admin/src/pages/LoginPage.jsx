@@ -6,7 +6,7 @@ export default function LoginPage(){
         <>
         <div style={{display:"flex",alignItems:"center",textAlign:"center"}}>Login Page
             <Signedout>
-                <SignIn/>
+                <SignedIn/>
             </Signedout>
 
             <SignedIn>
