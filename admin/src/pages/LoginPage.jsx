@@ -4,7 +4,8 @@ import { SignalMediumIcon } from "lucide-react";
 export default function LoginPage(){
     return(
         <>
-        <div style={{display:"flex",alignItems:"center",textAlign:"center"}}>Login Page</div>
+        <div style={{display:"flex",alignItems:"center",textAlign:"center"}}>
+            <h1>Login Page</h1>
         <SignedOut>
             <SignInButton mode="model"/>
         </SignedOut>
@@ -12,6 +13,7 @@ export default function LoginPage(){
         <SignedIn>
             <UserButton/>
         </SignedIn>
+        </div>
         </>
     )
 }
