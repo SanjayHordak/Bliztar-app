@@ -7,7 +7,7 @@ import { NAVIGATION } from './Navbar';
 
 export default function Sidebar() {
     const location = useLocation();
-    const user = useUser();
+    const { user } = useUser();
   return (
     <div className='drawer-side is-drawer-close:overflow-visible'>
         <label htmlFor="my-drawer"  aria-label='close sidebar'className='drawer-overlay'></label>
@@ -45,7 +45,7 @@ export default function Sidebar() {
                 <p className='text-sm font-semibold truncate '>
                     {user?.firstName} {user?.lastName}
                 </p>
-                <p className='text-xs opacity-60 truncate'>{user?.emailAddresses[0].emailAddress}</p>
+                <p className='text-xs opacity-60 truncate'>{user?.emailAddresses?.[0]?.emailAddress ?? ''}</p>
                </div>
             </div>
         </div>

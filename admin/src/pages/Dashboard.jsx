@@ -14,13 +14,13 @@ export default function DashBoard(){
         queryKey:["dashboardStats"],
         queryFn: statsApi.getDashboard
     });
-//it would return last 5 orders 
-    const recentOrders = ordersData.orders.slice(0,5);
+    // it should return last 5 orders (guard against undefined)
+    const recentOrders = ordersData?.orders?.slice(0,5) || [];
 
     const statsCards = [
         {
             name:"Total Revenue",
-            value:statsLoading ? "..." : `$${statsData.totalRevenue.toFixed(2) || 0}`,
+            value: statsLoading ? "..." : `$${(statsData?.totalRevenue || 0).toFixed(2)}`,
             icon:<DollarSignIcon className='size-8'/>
         },
         {
@@ -44,13 +44,13 @@ export default function DashBoard(){
         <div className="space-y-8">
         {/*Stats*/}
         <div className="stats stats-vertical lg:stats-horizontal shadow w-full bg-base-100">
-            {statsCards.map((stat) => {
+            {statsCards.map((stat) => (
                 <div key={stat.name} className='stat'>
                     <div className='stat-figure text-primary'>{stat.icon}</div>
                     <div className='stat-title'>{stat.name}</div>
                     <div className='stat-value'>{stat.value}</div>
                 </div>
-            })}
+            ))}
         </div>
         {/*RECENT ORDERS*/}
         <div className='card base-bg-100 shadow-xl'>
