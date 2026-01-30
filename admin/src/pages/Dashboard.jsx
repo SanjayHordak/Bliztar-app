@@ -20,7 +20,7 @@ export default function DashBoard(){
     const statsCards = [
         {
             name:"Total Revenue",
-            value: statsLoading ? "..." : `$${(statsData?.totalRevenue || 0).toFixed(2)}`,
+            value: statsLoading ? "..." : `$${(statsData?.totalRevenue || 0)?.toFixed(2)}`,
             icon:<DollarSignIcon className='size-8'/>
         },
         {
