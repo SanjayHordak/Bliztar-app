@@ -3,7 +3,7 @@
 export default function LoginPage(){
     return(
         <>
-        <div>Login Page</div>
+        <div style={{display:"flex",alignItems:"center",textAlign:"center"}}>Login Page</div>
         </>
     )
 }
