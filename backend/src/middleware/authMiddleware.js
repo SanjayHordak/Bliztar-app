@@ -20,12 +20,14 @@ export const protectRoute = [requireAuth(), async (req, res, next) => {
     }
 }];
 
-export const adminOnly = (req,res,next) =>{
-    if(!req.user){
-        return res.status(401).json({message:'Unauthorized-User not found'});
-    }
-    if(req.user.email !== ENV.ADMIN_EMAIL){
-        return  res.status(403).json({message:'Forbidden: Admins access only'});
-    }
-    next();
-}
+export const adminOnly = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  if (req.user.role !== "ADMIN") {
+    return res.status(403).json({ message: "Forbidden: Admins only" });
+  }
+
+  next();
+};

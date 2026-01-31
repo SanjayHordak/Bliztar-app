@@ -11,17 +11,25 @@ const addressSchema = new mongoose.Schema({
     Isdefault:{type:Boolean,default:false}
 })
 
-const userSchema = new mongoose.Schema({
-    email:{type:String,required:true,unique:true},
-    name:{type:String,required:true},
-    phoneNumber:{type:Number,unique:true},
-    imageUrl:{type:String,default:""},
-    clerkId:{type:String,required:true,unique:true},
-    address:[addressSchema],
-    wishlist:[{type:mongoose.Schema.Types.ObjectId,ref:'Product'}],
-},
-{
-    timestamps:true
-})
+const userSchema = new mongoose.Schema(
+  {
+    email: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    phoneNumber: { type: Number, unique: true },
+    imageUrl: { type: String, default: "" },
+    clerkId: { type: String, required: true, unique: true },
+
+    role: {
+      type: String,
+      enum: ["USER", "ADMIN"],
+      default: "USER",
+    },
+
+    address: [addressSchema],
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+  },
+  { timestamps: true }
+);
+
 
 export const User = mongoose.model('User',userSchema);
