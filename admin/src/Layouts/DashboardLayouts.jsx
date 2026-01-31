@@ -12,10 +12,8 @@ export default function DashboardLayouts() {
             <main className='p-6'>
            <Outlet/>
            </main>
-           <div>
-            <Sidebar/>
-           </div>
         </div>
+        <Sidebar/>
     </div>
   )
 }
